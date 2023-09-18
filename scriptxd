@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+username=$(whoami)
+datetime=$(curl -sI http://www.lcc.ufrn.br/aviso/ | grep Last-Modified | awk '{print $3 $4 $5 $6 $7}')
+filename="/servidor/$username/.aviso$datetime"
+
+if [ ! -f $filename ]; then
+    rm /servidor/$username/.aviso*
+    touch $filename
+    firefox http://lcc.ufrn.br/aviso/ &
+fi
+
